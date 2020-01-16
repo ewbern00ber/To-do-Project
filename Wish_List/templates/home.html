@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+{% if messages %}
+	{% for message in messages %}
+		<div class="alert alert-dark alert-dismissable" role="alert">
+			<button class="close" data-dismiss="alert">
+				<small><sup>x</sup></small>
+			</button>
+  			{{ message }}
+  		</div>
+	{% endfor %}
+
+{% endif %}
+
+
+	
+	{% if all_items %}
+	<table class="table table-bordered">
+			 <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">Item</th>
+			      <th scope="col"><center>Completed</center></th>
+			      <th scope="col"><center>Remove</center></th>
+			    </tr>
+			 </thead>
+			{% for things in all_items %}
+				{% if things.completed %}
+					<tr class="table-active">
+						<td class="striker"><a href="{% url 'about' things.id %}">{{ things.item }}</a></td>
+						
+						<td><center><a href="{% url 'incomplete' things.id %}" class="btn btn-success btn-sm active" role="button" aria-pressed="true">Yes</a></center></td>
+						
+						<td><center><a href="{% url 'delete' things.id %}" class="btn btn-danger btn-sm active" role="button" aria-pressed="true">Delete</a></center></td>	
+					</tr>
+				{% else %}
+					<tr class="table-secondary">
+						<td><a href="{% url 'about' things.id %}">{{ things.item }}</a></td>
+						
+						<td><center><a href="{% url 'completed' things.id %}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">No</a></center></td>
+						
+						<td><center><a href="{% url 'delete' things.id %}" class="btn btn-danger btn-sm active" role="button" aria-pressed="true">Delete</a></center></td>	
+					</tr>
+				{% endif %}	
+			{% endfor %}
+	</table>	
+	{% endif %}
+	
+<br/>
+
+{% endblock %}
